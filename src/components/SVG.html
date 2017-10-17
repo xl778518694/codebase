@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--心电图SVG-->
+<svg xmlns="http://www.w3.org/2000/svg" class="svg-cardiogram" width="150px" height="50px" viewBox="0 0 150 50">
+    <defs>
+        <linearGradient id='l-g-1' x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="white" stop-opacity='.8'/>
+            <stop offset=".25" stop-color="green" stop-opacity='1'/>
+            <stop offset=".75" stop-color="#108ee9" stop-opacity='1'/>
+            <stop offset="1" stop-color="white" stop-opacity='.8'/>
+        </linearGradient>
+    </defs>
+    <path id="cardiogram" d='M10,25 L65,25 67.5,30 72.5,5 77.5,45 82.5,20 85,25 140,25' fill="transparent"
+          stroke="url(#l-g-1)" stroke-width="2"/>
+    <rect width="10" height="100%" style="fill:rgb(255,255,255);">
+        <animateMotion path="M0,0 L150,0" begin="0s" dur="2s" repeatCount="indefinite"/>
+    </rect>
+</svg>
+
+<!--五边形SVG-->
+<svg xmlns="http://www.w3.org/2000/svg" class="svg-pentagon" viewBox="0 0 200 200">
+    <defs>
+        <linearGradient id='l-g-1' x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#218380" stop-opacity='1'/>
+            <stop offset=".2" stop-color="#FFBC42" stop-opacity='1'/>
+            <stop offset=".4" stop-color="#D81159" stop-opacity='1'/>
+            <stop offset=".6" stop-color="#8F2D56" stop-opacity='1'/>
+            <stop offset=".8" stop-color="#4F86C6" stop-opacity='1'/>
+            <stop offset="1" stop-color="#218380" stop-opacity='1'/>
+        </linearGradient>
+        <linearGradient id='l-g-2' x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#000" stop-opacity='1'/>
+            <stop offset="1" stop-color="#fff" stop-opacity='1'/>
+        </linearGradient>
+
+        <linearGradient id='l-g-3' x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity='1'/>
+            <stop offset="1" stop-color="#000" stop-opacity='1'/>
+        </linearGradient>
+
+
+        <linearGradient id='l-g-4' x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#000" stop-opacity='1'/>
+            <stop offset="1" stop-color="#000" stop-opacity='1'/>
+        </linearGradient>
+    </defs>
+    <polygon id="cardiogram" points='100,10 10,78 40,198 160,198 190,78' fill="transparent" stroke="url(#l-g-1)"/>
+    <path d='M100,114 L100,10' stroke="rgba(0,0,0,.5)"/>
+    <path d='M100,114 L10,78' stroke="rgba(0,0,0,.5)"/>
+    <path d='M100,114 L40,198' stroke="rgba(0,0,0,.5)"/>
+    <path d='M100,114 L160,198' stroke="rgba(0,0,0,.5)"/>
+    <path d='M100,114 L190,78' stroke="rgba(0,0,0,.5)"/>
+</svg>
+
+</body>
+</html>

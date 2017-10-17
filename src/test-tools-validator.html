@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>TOols.Validator test</title>
+    <link rel="stylesheet" href="codebase.min.css">
+    <style media="screen">
+        .option{
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="option">
+        <input type="text" class="test input" validators='require' name="" value="">
+    </div>
+    <div class="option">
+        <input type="text" class="test input" validators='require' validateTypes='4' value="">
+    </div>
+    <div class="option">
+        <input type="text" class="test input" validators='test1' placeholder="自定义配置对应方法返回的错误描述">
+    </div>
+    <div class="option">
+        <input type="text" class="test input feedback" validators='test2' placeholder="自定义配置的默认错误描述">
+    </div>
+    <div class="option">
+        <input type="text" class="test input" validators='test2' showStatus='0' placeholder="不显示检验结果">
+    </div>
+    <div class="option">
+        <input type="text" class="test input" validators='require' valueTarget='#val' placeholder="此处实际校验val的值">
+        <label for="val">val:</label><input type="text" class="input" id='val' value='' placeholder="改变此处的值">
+    </div>
+    <script src="codebase.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        function test1() {
+            return '自定义配置对应方法返回的错误描述';
+        }
+
+        function test2() {
+            return false;
+        }
+        Tools.Validator.defineConfig({
+            "test1": {
+                "func": "test1",
+                "type": 4,
+                "error": 'blur事件触发的test1校验方法'
+            },
+            "test2": {
+                "func": "test2",
+                "type": 4,
+                "error": '自定义配置的默认错误描述'
+            }
+        });
+
+        var V = new Tools.Validator(),
+            V1 = new Tools.Validator({
+                showAllStatus: false
+            });
+        Tools.D('.test').on('focus', function() {
+            V.check(this, 1);
+        }).on('keyup', function() {
+            V.check(this, 2);
+        }).on('blur', function() {
+            V.check(this, 4);
+        });
+    </script>
+</body>
+
+</html>

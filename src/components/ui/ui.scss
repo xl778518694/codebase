@@ -1,0 +1,657 @@
+@charset "UTF-8";
+@import "../const.scss";
+
+blockquote,
+body,
+button,
+dd,
+dl,
+dt,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+input,
+legend,
+li,
+ol,
+p,
+pre,
+td,
+textarea,
+th,
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+    font: 12px / 1.5 arial;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 100%;
+}
+
+address,
+cite,
+dfn,
+em,
+var {
+    font-style: normal;
+}
+
+code,
+kbd,
+pre,
+samp {
+    font-family: couriernew, courier, monospace;
+}
+
+small {
+    font-size: 12px;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+sup {
+    vertical-align: text-top;
+}
+
+sub {
+    vertical-align: text-bottom;
+}
+
+legend {
+    color: #000;
+}
+
+fieldset,
+img {
+    border: 0;
+}
+
+button,
+input,
+select,
+textarea {
+    font-size: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+input {
+    outline: 0 none;
+}
+
+input:-ms-clear {
+    display: none;
+}
+
+input:-webkit-search-cancel-button {
+    display: none;
+}
+
+.link {
+    display: inline-block;
+    border: 0 none;
+    padding: 0;
+    background-color: transparent;
+    text-decoration: none;
+    color: map-get($color, 'primary');
+    outline: none;
+    cursor: pointer;
+    @include transition;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+$c: map-get($color, 'primary');
+$cl: map-get($color-light, 'primary');
+$cd: map-get($color-dark, 'primary');
+
+
+%BtnDisabled {
+    border-color: map-get($color, 'border');
+    background-color: map-get($color, 'disabled');
+    color: map-get($color-dark, 'disabled');
+    cursor: not-allowed;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0 $h-normal / 2;
+    white-space: nowrap;
+    font-size: $f-s-normal;
+    text-align: center;
+    min-width: $btn-w-min;
+    height: $h-normal;
+    line-height: $h-normal - 2px;
+    text-decoration: none;
+    outline-style: none;
+    border: 1px solid map-get($color, 'border');
+    color: map-get($color, 'font');
+    background-color: map-get($color, 'bg');
+    cursor: pointer;
+    @include radius;
+    @include box-sizing;
+    @include transition;
+
+    &:hover {
+        color: $c;
+        border-color: $c;
+        text-decoration: none;
+    }
+
+    &:focus {
+        color: $cd;
+        border-color: $cd;
+    }
+
+    @each $t in primary, warning, danger, correct {
+        $c: map-get($color, $t);
+        $cl: map-get($color-light, $t);
+        $cd: map-get($color-dark, $t);
+
+        &.btn-#{$t} {
+            border-color: $c;
+
+            @if $t == 'warning' {
+                color: map-get($color, 'font');
+            }
+            @else {
+                color: #ffffff;
+            }
+            background-color: $c;
+
+            &:hover {
+                background-color: $cl;
+                border-color: $cl;
+
+                @if $t == 'warning' {
+                    color: map-get($color, 'font');
+                }
+            }
+
+            &:focus {
+                background-color: $cd;
+                border-color: $cd;
+                color: #ffffff;
+            }
+        }
+    }
+
+    &.btn-disabled {
+        @extend %BtnDisabled;
+        &:hover{
+            @extend %BtnDisabled;
+        }
+        &:focus{
+            @extend %BtnDisabled;
+        }
+    }
+}
+
+.btn-group {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+
+    .btn {
+        border-left-width: 0;
+        @include radius(0);
+        margin-left: 1px;
+
+        &:first-child {
+            border-left-width: 1px;
+            @include radius(4px 0 0 4px);
+        }
+
+        &:last-child {
+            @include radius(0 4px 4px 0);
+        }
+    }
+}
+@font-face {
+    font-family: 'iconfont';
+    src: url('//at.alicdn.com/t/font_339362_adwf3e0vyt4kj4i.eot');
+    src: url('//at.alicdn.com/t/font_339362_adwf3e0vyt4kj4i.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_339362_adwf3e0vyt4kj4i.woff') format('woff'), url('//at.alicdn.com/t/font_339362_adwf3e0vyt4kj4i.ttf') format('truetype'), url('//at.alicdn.com/t/font_339362_adwf3e0vyt4kj4i.svg#iconfont') format('svg');
+}
+
+*:after,
+*:before {
+    font-family: "iconfont" !important;
+}
+
+.input {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: $w-normal;
+    border: 0 none;
+    font-size: $f-s-normal;
+    height: $h-normal;
+    @include radius;
+    @include transition;
+    @include box-sizing;
+
+    & > input {
+        display: inline-block;
+        padding: $blank-small/2 $blank-small;
+        height: 100%;
+        width: 100%;
+        border: 1px solid map-get($color, 'border');
+        outline: none;
+        @include radius;
+        @include box-sizing;
+
+        &:hover {
+            border-color: $c;
+        }
+
+        &:focus {
+            border-color: $c;
+            @include box-shadow(0 0 3px $c);
+        }
+    }
+}
+
+input.input {
+    padding: $blank-small/2 $blank-small;
+    border: 1px solid map-get($color, 'border');
+
+    &:hover {
+        border-color: $c;
+    }
+
+    &:focus {
+        border-color: $c;
+        @include box-shadow(0 0 3px $c);
+    }
+}
+
+.input-error {
+    $c: map-get($color, 'error');
+
+    & > input,
+    &.input {
+        border-color: $c;
+
+        &:hover {
+            border-color: $c;
+        }
+
+        &:focus {
+            border-color: $c;
+            @include box-shadow(0 0 3px $c);
+        }
+    }
+}
+
+.feedback {
+    & > input {
+        padding-right: $blank-large;
+    }
+
+    &:after {
+        position: absolute;
+        right: 0;
+        top: 0;
+        text-align: center;
+        font-size: $f-s-normal;
+        width: $blank-large;
+        height: $h-normal - 2px;
+        line-height: $h-normal - 2px;
+    }
+    @each $t in map-keys($status) {
+        &.input-#{$t}:after {
+            content: "#{map-get($status, $t)}";
+            color: map-get($color, $t);
+        }
+    }
+}
+
+fieldset {
+    border: 0 none;
+    border-top: 1px solid map-get($color, 'line');
+    margin-top: $blank-large;
+
+    legend {
+        color: map-get($color, 'font');
+    }
+}
+
+.switch {
+    $h: $h-small;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    border: 0 none;
+    cursor: pointer;
+
+    &:before {
+        display: inline-block;
+        content: attr(data-off);
+        height: $h;
+        line-height: $h;
+        font-size: $f-s-small;
+        border: 1px solid map-get($color, 'border');
+        padding: 0 $h / 2 - 2px 0 $h + 2px;
+        color: map-get($color, 'border');
+        @include radius($h / 2);
+        @include transition;
+        @include box-sizing;
+    }
+
+    &:after {
+        position: absolute;
+        content: '';
+        background: map-get($color, 'border');
+        border: 0 none;
+        top: 50%;
+        left: $h / 6 + 1px;
+        margin-top: -$h /3;
+        right: auto;
+        width: $h * 2 /3;
+        height: $h * 2 /3;
+        @include radius($h * 2 /3);
+        @include transition;
+    }
+}
+
+.onswitch {
+    $h: $h-small;
+
+    &:before {
+        content: attr(data-on);
+        color: map-get($color, 'bg');
+        padding: 0 $h + 2px 0 $h / 2 - 2px;
+        border-color: map-get($color, 'success');
+        background-color: map-get($color, 'success');
+    }
+
+    &:after {
+        left: auto;
+        right: $h / 6 + 1px;
+        background: map-get($color, 'bg');
+    }
+}
+
+.select {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+
+    .input {
+        & > input {
+            padding-right: $blank-large;
+            cursor: pointer;
+        }
+
+        &:after {
+            position: absolute;
+            content: '';
+            width: 0;
+            height: 0;
+            top: 50%;
+            right: $blank-large / 2 - 5px;
+            margin-top: -2.5px;
+            border: 5px solid transparent;
+            border-bottom: 0;
+            border-top-color: map-get($color, 'font');
+            @include transition;
+        }
+    }
+
+    .options,
+    dl {
+        position: absolute;
+        display: none;
+        left: 0;
+        top: $h-normal + 3px;
+        width: $w-normal;
+        padding: $blank-small 0;
+        background-color: map-get($color, 'bg');
+        border: 1px solid map-get($color, 'border');
+        @include radius;
+        @include box-sizing;
+        @include transition(top 1s);
+
+        .option,
+        dd {
+            display: inline-block;
+            padding: 0 $blank-small;
+            width: 100%;
+            height: $h-normal;
+            line-height: $h-normal;
+            color: map-get($color, 'font');
+            font-size: $f-s-small;
+            @include box-sizing;
+            @include transition;
+
+            &:hover {
+                background-color: map-get($color-dark, 'bg');
+            }
+
+            &.current {
+                background-color: map-get($color, 'success');
+                color: map-get($color, 'bg');
+            }
+        }
+    }
+
+    &.selected {
+        .input {
+            &:after {
+                transform: rotate(360deg);
+                border-top: 0;
+                border-bottom: 5px solid map-get($color, 'font');
+            }
+        }
+
+        .options,
+        dl {
+            display: inline-block;
+            @extend .anim-show-scaleY;
+        }
+    }
+}
+
+input[type='checkbox'] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    visibility: hidden;
+}
+
+.checkboxs {
+    &.some {
+        &:before {
+            content: '';
+            background-color: map-get($color, 'bg');
+            border-color: $c;
+            border-width: ($f-s-normal / 2) ($f-s-normal / 4);
+        }
+    }
+
+    &.some.disabled{
+        &:before {
+            background-color: map-get($color, 'bg');
+        }
+    }
+
+    &.all {
+        &:before {
+            content: '\e60d';
+            color: #ffffff;
+            border-color: $c;
+            background-color: $c;
+        }
+    }
+    @extend .checkbox;
+}
+
+.checkbox {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 $blank-normal 0 $blank-large;
+    cursor: pointer;
+
+    &:before {
+        position: absolute;
+        display: inline-block;
+        vertical-align: middle;
+        content: '';
+        width: $f-s-normal + 2px;
+        height: $f-s-normal + 2px;
+        line-height: $f-s-normal;
+        text-align: center;
+        font-size: $f-s-small;
+        left: 0;
+        top: 50%;
+        margin-top: -($f-s-normal / 2 + 1px);
+        border: 1px solid map-get($color, 'border');
+        @include radius;
+        @include transition;
+        @include box-sizing;
+    }
+
+    &:hover:before {
+        border-color: $c;
+    }
+
+    &.checked {
+        &:before {
+            content: '\e60d';
+            color: #ffffff;
+            border-color: $c;
+            background-color: $c;
+        }
+    }
+
+    &.disabled {
+        $c: map-get($color-dark, 'disabled');
+        cursor: not-allowed;
+        color: map-get($color-light, 'font');
+
+        &:before {
+            border-color: $c;
+            background-color: $c;
+        }
+    }
+}
+
+.fd-msgs {
+    position: absolute;
+    height: 0;
+    top: $blank-normal;
+    left: 0;
+    right: 0;
+
+    .fd-msg {
+        display: block;
+        margin-bottom: $blank-normal*2+$f-s-small;
+        height: 0;
+        pointer-events: none;
+        text-align: center;
+
+        .fd-msg-content {
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+            background: map-get($color, 'bg');
+            font-size: $f-s-small;
+            padding: $blank-small $blank-normal $blank-small $blank-normal + 20px;
+            border: 1px solid map-get($color, 'border');
+            white-space: nowrap;
+            pointer-events: all;
+            @include radius;
+            @include box-shadow(0 0 3px map-get($color, 'border'));
+
+            &:before {
+                position: absolute;
+                content: '\e73e';
+                font-size: $f-s-normal;
+                display: inline-block;
+                vertical-align: middle;
+                color: map-get($color, 'info');
+                left: $blank-normal;
+            }
+            @each $t in map-keys($status) {
+                &[type=#{$t}]:before {
+                    content: "#{map-get($status, $t)}";
+                    color: map-get($color, $t);
+                }
+            }
+        }
+    }
+}
+@each $action in map-keys($animation) {
+    $option: map-get($animation, $action);
+    @each $behavior in map-keys($option) {
+        @if $behavior != 'anim' {
+            @keyframes #{$behavior}-#{$action} {
+                from {
+                    transform: #{map-get($option, 'anim')}'(#{nth(map-get($option, $behavior), 1)})';
+
+                    @if $behavior == 'show' {
+                        opacity: 0;
+                    }
+                    @else {
+                        opacity: 1;
+                    }
+                }
+
+                to {
+                    transform: #{map-get($option, 'anim')}'( #{nth(map-get($option, $behavior), 2)})';
+
+                    @if $behavior == 'show' {
+                        opacity: 1;
+                    }
+                    @else {
+                        opacity: 0;
+                    }
+                }
+            }
+
+            .anim-#{$behavior}-#{$action} {
+                animation: #{$behavior}-#{$action} 0.3s ease-in-out;
+            }
+        }
+    }
+}

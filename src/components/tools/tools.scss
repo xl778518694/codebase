@@ -1,0 +1,195 @@
+@charset "UTF-8";
+@import "../const.scss";
+
+.calendarWrap {
+    display: inline-block;
+    padding: $blank-normal;
+    background: map-get($color, 'bg');
+    border: 1px solid map-get($color, 'border');
+    @include radius;
+
+    &:hover {
+        @include box-shadow(0 0 10px -2px #000);
+    }
+
+    a {
+        color: map-get($color, 'primary');
+        display: inline-block;
+        cursor: pointer;
+        @include radius(3px);
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    .calendarTop {
+        line-height: 2em;
+        padding-bottom: $blank-small;
+        text-align: center;
+        border-bottom: 1px dashed map-get($color, 'line');
+
+        label {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .nextMon,
+        .nextYear,
+        .prevMon,
+        .prevYear {
+            width: 12%;
+            @include box-sizing;
+
+            &:hover {
+                background: map-get($color, 'primary');
+                color: #ffffff;
+                @include transition(background 0.3s);
+            }
+        }
+
+        .date {
+            width: 50%;
+            display: inline-block;
+        }
+    }
+
+    .dayList {
+        margin: $blank-normal 0;
+        border: 0 none;
+        width: 100%;
+        text-align: center;
+
+        th {
+            color: map-get($color-light, 'font');
+        }
+
+        td {
+            padding: 0.3em 0.8em;
+            cursor: pointer;
+            @include radius;
+            text-align: right;
+            color: map-get($color-light, 'font');
+
+            &:hover {
+                background: map-get($color-light, 'correct');
+                color: #ffffff;
+                @include transition(background 0.3s);
+            }
+        }
+
+        .curMonFlag {
+            color: map-get($color-dark, 'font');
+        }
+
+        .currentDay {
+            background: map-get($color, 'correct');
+            color: #ffffff;
+        }
+    }
+
+    .timeWrap {
+        text-align: right;
+        line-height: 2em;
+
+        .timeInput {
+            width: 40px;
+            border: none;
+            border-bottom: 1px solid map-get($color, 'border');
+            display: inline-block;
+            text-align: center;
+        }
+
+        .timeSubmit {
+            padding: 0 $blank-small;
+
+            &:hover {
+                background: map-get($color, 'primary');
+                color: #ffffff;
+                @include transition(background 0.3s);
+            }
+        }
+    }
+}
+
+.validatorBottom {
+    position: absolute;
+    color: #f04134;
+}
+
+.validatorStatus {
+    position: absolute;
+    padding: 6px 15px;
+    background: #ffffff;
+    border: 1px solid #f04134;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 2px #000;
+    -moz-box-shadow: 0 0 2px #000;
+    box-shadow: 0 0 2px #000;
+
+    &:after,
+    &:before {
+        position: absolute;
+        width: 0;
+        content: "";
+        height: 0;
+        left: 15px;
+        top: -20px;
+        border: 10px solid transparent;
+        border-bottom-color: #f04134;
+        z-index: 1;
+    }
+
+    &:after {
+        top: -19px;
+        border-bottom-color: #ffffff;
+        z-index: 2;
+    }
+}
+/*toolsBadge 徽标数或文字*/
+.toolsBadge {
+    position: relative;
+
+    &:before {
+        position: absolute;
+        display: inline-block;
+        font-size: $f-s-small;
+        background: map-get($color, 'danger');
+        color: #ffffff;
+        content: attr(data-toolsBadge);
+        padding: 0 0.5em;
+        height: 1.5em;
+        line-height: 1.5;
+        top: -.75em;
+        right: -.75em;
+        @include radius(.75em);
+    }
+}
+/*toolsTip 小贴士 title替代品*/
+
+.toolsTip {
+    position: absolute;
+    padding: $blank-small $blank-normal;
+    display: block;
+    max-width: 100%;
+    left: -999px;
+    white-space: normal;
+    background: map-get($color-dark, 'font');
+    color: #ffffff;
+    @include transition;
+
+    &:before {
+        display: inline-block;
+        position: absolute;
+        left: 50%;
+        top: 100%;
+        content: '';
+        width: 0;
+        height: 0;
+        border: 10px solid transparent;
+        border-top-color: map-get($color-dark, 'font');
+        z-index: 2;
+    }
+}

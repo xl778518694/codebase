@@ -1,0 +1,154 @@
+@charset "UTF-8";
+.calendarWrap {
+  display: inline-block;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #bfbfbf;
+  border-radius: 4px; }
+  .calendarWrap:hover {
+    -webkit-box-shadow: 0 0 10px -2px #000;
+    -moz-box-shadow: 0 0 10px -2px #000;
+    box-shadow: 0 0 10px -2px #000; }
+  .calendarWrap a {
+    color: #108ee9;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 3px; }
+    .calendarWrap a:hover {
+      text-decoration: none; }
+  .calendarWrap .calendarTop {
+    line-height: 2em;
+    padding-bottom: 8px;
+    text-align: center;
+    border-bottom: 1px dashed #e9e9e9; }
+    .calendarWrap .calendarTop label {
+      text-align: center;
+      font-weight: bold; }
+    .calendarWrap .calendarTop .nextMon,
+    .calendarWrap .calendarTop .nextYear,
+    .calendarWrap .calendarTop .prevMon,
+    .calendarWrap .calendarTop .prevYear {
+      width: 12%;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box; }
+      .calendarWrap .calendarTop .nextMon:hover,
+      .calendarWrap .calendarTop .nextYear:hover,
+      .calendarWrap .calendarTop .prevMon:hover,
+      .calendarWrap .calendarTop .prevYear:hover {
+        background: #108ee9;
+        color: #ffffff;
+        -webkit-transition: background 0.3s;
+        transition: background 0.3s; }
+    .calendarWrap .calendarTop .date {
+      width: 50%;
+      display: inline-block; }
+  .calendarWrap .dayList {
+    margin: 16px 0;
+    border: 0 none;
+    width: 100%;
+    text-align: center; }
+    .calendarWrap .dayList th {
+      color: #747474; }
+    .calendarWrap .dayList td {
+      padding: 0.3em 0.8em;
+      cursor: pointer;
+      border-radius: 4px;
+      text-align: right;
+      color: #747474; }
+      .calendarWrap .dayList td:hover {
+        background: #00db6e;
+        color: #ffffff;
+        -webkit-transition: background 0.3s;
+        transition: background 0.3s; }
+    .calendarWrap .dayList .curMonFlag {
+      color: #414141; }
+    .calendarWrap .dayList .currentDay {
+      background: #00a854;
+      color: #ffffff; }
+  .calendarWrap .timeWrap {
+    text-align: right;
+    line-height: 2em; }
+    .calendarWrap .timeWrap .timeInput {
+      width: 40px;
+      border: none;
+      border-bottom: 1px solid #bfbfbf;
+      display: inline-block;
+      text-align: center; }
+    .calendarWrap .timeWrap .timeSubmit {
+      padding: 0 8px; }
+      .calendarWrap .timeWrap .timeSubmit:hover {
+        background: #108ee9;
+        color: #ffffff;
+        -webkit-transition: background 0.3s;
+        transition: background 0.3s; }
+
+.validatorBottom {
+  position: absolute;
+  color: #f04134; }
+
+.validatorStatus {
+  position: absolute;
+  padding: 6px 15px;
+  background: #ffffff;
+  border: 1px solid #f04134;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 2px #000;
+  -moz-box-shadow: 0 0 2px #000;
+  box-shadow: 0 0 2px #000; }
+  .validatorStatus:after, .validatorStatus:before {
+    position: absolute;
+    width: 0;
+    content: "";
+    height: 0;
+    left: 15px;
+    top: -20px;
+    border: 10px solid transparent;
+    border-bottom-color: #f04134;
+    z-index: 1; }
+  .validatorStatus:after {
+    top: -19px;
+    border-bottom-color: #ffffff;
+    z-index: 2; }
+
+/*toolsBadge 徽标数或文字*/
+.toolsBadge {
+  position: relative; }
+  .toolsBadge:before {
+    position: absolute;
+    display: inline-block;
+    font-size: 12px;
+    background: #f04134;
+    color: #ffffff;
+    content: attr(data-toolsBadge);
+    padding: 0 0.5em;
+    height: 1.5em;
+    line-height: 1.5;
+    top: -.75em;
+    right: -.75em;
+    border-radius: 0.75em; }
+
+/*toolsTip 小贴士 title替代品*/
+.toolsTip {
+  position: absolute;
+  padding: 8px 16px;
+  display: block;
+  max-width: 100%;
+  left: -999px;
+  white-space: normal;
+  background: #414141;
+  color: #ffffff;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s; }
+  .toolsTip:before {
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    content: '';
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: #414141;
+    z-index: 2; }

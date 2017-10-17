@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Tools.TimePicker test</title>
+    <link rel="stylesheet" type="text/css" href="codebase.min.css" />
+</head>
+
+<body>
+    <input type="text" id='time' class="input" name="time" value="">
+    <input type="text" id='time1' class="input" name="time1" value="">
+    <script src="codebase.js"></script>
+    <script>
+        Tools.D('#time').on('click', function() {
+            (new Tools.TimePicker(this)).create();
+        })
+        Tools.D('#time1').on('click', function() {
+            (new Tools.TimePicker(this, {
+                firstDayOfWeek: 1,
+                language: 'zh-CN',
+                weeks: 5,
+                dateFmt: 'yyyy-MM-dd HH:mm:ss',
+                showTime: true
+            })).create();
+        })
+    </script>
+</body>
+
+</html>

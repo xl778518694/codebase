@@ -1,0 +1,38 @@
+$color: ( border: #bfbfbf, line: #e9e9e9, bg: #ffffff, disabled: #fbfbfb, font: #5a5a5a, primary: #108ee9, danger: #f04134, error: #f04134, success: #00a854, correct: #00a854, warning: #ffbf00, info: #108ee9, );
+$color-light: ();
+$color-dark: ();
+@each $k in map-keys($color) {
+    $color-light: map-merge($color-light, (#{$k}: lighten(map-get($color, $k), 10%)));
+    $color-dark: map-merge($color-dark, (#{$k}: darken(map-get($color, $k), 10%)));
+}
+$f-s-small: 12px;
+$f-s-normal: 14px;
+$f-s-large: 16px;
+$btn-w-min: 80px;
+$btn-w-max: 200px;
+$blank-small: 8px;
+$blank-normal: $blank-small * 2;
+$blank-large: $blank-small * 3;
+$h-normal: 32px;
+$h-small: 22px;
+$w-normal: 200px;
+$w-min: 100px;
+$w-max: 400px;
+$status: ( info: '\e73e', warning: '\e734', error: '\e626', incorrect: '\e626', success: '\e627', correct: '\e627' );
+$animation: ( up:( anim: 'translateY', show: (30px 0), hide: (0 -30px) ), down:( anim: 'translateY', show: (-30px 0), hide: (0 30px) ), press:( anim: 'scale', show: (3 1), hide: (1 0) ), pressY:( anim: 'scaleY', show: (3 1), hide: (1 0) ), pressX:( anim: 'scaleX', show: (3 1), hide: (1 0) ), scale:( anim: 'scale', show: (0 1), hide: (1 3) ), scaleY:( anim: 'scaleY', show: (0 1), hide: (1 3) ), scaleX:( anim: 'scaleX', show: (0 1), hide: (1 3) ) );
+@mixin radius($radius:4px) {
+    border-radius: $radius;
+}
+@mixin box-sizing($t:border-box) {
+    -webkit-box-sizing: $t;
+    box-sizing: $t;
+}
+@mixin box-shadow($arguments) {
+    -webkit-box-shadow: $arguments;
+    -moz-box-shadow: $arguments;
+    box-shadow: $arguments;
+}
+@mixin transition($transition:all .3s) {
+    -webkit-transition: $transition;
+    transition: $transition;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>test feedback</title>
+    <link rel="stylesheet" href="codebase.min.css">
+</head>
+
+<body>
+    <input type="button" data-type="info" class="btn msg" value="通知消息" />
+    <input type="button" data-type="success" class="btn btn-primary msg" value="成功消息" />
+    <input type="button" data-type="error" class="btn btn-danger msg" value="错误消息" />
+    <input type="button" data-type="warning" class="btn btn-warning msg" value="警告消息" />
+
+    <script src="codebase.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        var t = Tools,
+            fb = t.Feedback,
+            $ = $ || t.D;
+        $('.msg').on('click', function() {
+            fb.msg(this.getAttribute('data-type'), 'this is the test content.', {
+                autoHide: false
+            });
+        })
+        fb.msg('this is another test content which is longer.');
+    </script>
+</body>
+
+</html>

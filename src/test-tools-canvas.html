@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tools.Canvas test</title>
+</head>
+
+<body>
+    <canvas id="loading" width="60" height="60"></canvas>
+    <canvas id="load" width="60" height="60"></canvas>
+    <script type="text/javascript" src="codebase.min.js"></script>
+    <script>
+        let canvas = new Tools.Canvas('loading');
+        canvas.alphaLoading();
+        let canvas1 = new Tools.Canvas('load');
+        canvas1.loading();
+        setTimeout(function() {
+            canvas.success();
+            canvas1.faild();
+        }, 2000);
+    </script>
+</body>
+
+</html>
