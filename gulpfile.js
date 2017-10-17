@@ -23,7 +23,7 @@ gulp.task('sass', function() {
 //合并压缩文件
 gulp.task('concatjs', function() {
     //读取JS文件，合并，输出到新目录，重新命名，压缩，输出
-    gulp.src('src/components/*/*.js')
+    gulp.src(['src/components/tools/tools.js','src/components/*/*.js'])
         .pipe(concat('codebase.js'))
         .pipe(gulp.dest('src'))
         .pipe(uglify())

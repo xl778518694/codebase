@@ -3,69 +3,95 @@
 
 <head>
     <meta charset="utf-8">
-    <title>TOols.Validator test</title>
+    <title>Tools.Validator test</title>
     <link rel="stylesheet" href="codebase.min.css">
     <style media="screen">
-        .option{
-            margin: 20px;
+        .option {
+            margin:30px 20px 0;
         }
     </style>
 </head>
 
 <body>
-    <div class="option">
-        <input type="text" class="test input" validators='require' name="" value="">
-    </div>
-    <div class="option">
-        <input type="text" class="test input" validators='require' validateTypes='4' value="">
-    </div>
-    <div class="option">
-        <input type="text" class="test input" validators='test1' placeholder="自定义配置对应方法返回的错误描述">
-    </div>
-    <div class="option">
-        <input type="text" class="test input feedback" validators='test2' placeholder="自定义配置的默认错误描述">
-    </div>
-    <div class="option">
-        <input type="text" class="test input" validators='test2' showStatus='0' placeholder="不显示检验结果">
-    </div>
-    <div class="option">
-        <input type="text" class="test input" validators='require' valueTarget='#val' placeholder="此处实际校验val的值">
-        <label for="val">val:</label><input type="text" class="input" id='val' value='' placeholder="改变此处的值">
-    </div>
-    <script src="codebase.min.js" charset="utf-8"></script>
-    <script type="text/javascript">
-        function test1() {
-            return '自定义配置对应方法返回的错误描述';
-        }
+<div class="option">
+    <input type="text" class="test input" validators='require' name="" value="">
+</div>
+<div class="option">
+    <input type="text" class="test input" validators='require' validateTypes='4' value="">
+</div>
+<div class="option">
+    <input type="text" class="test input" validators='test1' placeholder="自定义配置对应方法返回的错误描述">
+</div>
+<div class="option">
+    <input type="text" class="test input feedback" validators='test2' placeholder="自定义配置的默认错误描述">
+</div>
+<div class="option">
+    <input type="text" class="test input" validators='test2' showStatus='0' placeholder="不显示检验结果">
+</div>
+<div class="option">
+    <input type="text" class="test input" validators='require' valueTarget='#val' placeholder="此处实际校验val的值">
+    <label for="val">val:</label><input type="text" class="input" id='val' value='' placeholder="改变此处的值">
+</div>
+<fieldset>
+    <legend>清除某个输入框的校验信息</legend>
+    <button class="btn btn-primary clearNotice1">清楚第一个错误框的错误信息，不清除状态</button>
+    <button class="btn btn-danger clear1">清楚第一个错误框的错误信息，同时清除状态</button>
+</fieldset>
+<fieldset>
+    <legend>清除全部输入框的校验信息</legend>
+    <button class="btn btn-primary clearNotice">清楚错误信息，不清除状态</button>
+    <button class="btn btn-danger clear">清楚错误信息，同时清除状态</button>
+</fieldset>
+<script src="codebase.js" charset="utf-8"></script>
+<script type="text/javascript">
+    function test1() {
+        return '自定义配置对应方法返回的错误描述';
+    }
 
-        function test2() {
-            return false;
-        }
-        Tools.Validator.defineConfig({
-            "test1": {
-                "func": "test1",
-                "type": 4,
-                "error": 'blur事件触发的test1校验方法'
-            },
-            "test2": {
-                "func": "test2",
-                "type": 4,
-                "error": '自定义配置的默认错误描述'
-            }
-        });
+    function test2() {
+        return false;
+    }
 
-        var V = new Tools.Validator(),
-            V1 = new Tools.Validator({
-                showAllStatus: false
-            });
-        Tools.D('.test').on('focus', function() {
-            V.check(this, 1);
-        }).on('keyup', function() {
-            V.check(this, 2);
-        }).on('blur', function() {
-            V.check(this, 4);
-        });
-    </script>
+    Tools.Validator.defineConfig({
+        "test1": {
+            "func": "test1",
+            "type": 4,
+            "error": 'blur事件触发的test1校验方法'
+        },
+        "test2": {
+            "func": "test2",
+            "type": 4,
+            "error": '自定义配置的默认错误描述'
+        }
+    });
+
+    var V = new Tools.Validator(), TD = Tools.D;
+
+    TD('.test').on('focus', function () {
+        V.check(this, 1);
+    }).on('keyup', function () {
+        V.check(this, 2);
+    }).on('blur', function () {
+        V.check(this, 4);
+    });
+
+    TD('.clearNotice').on('click', function () {
+        V.clearNotice();
+    });
+
+    TD('.clear').on('click', function () {
+        V.clear();
+    });
+
+    TD('.clearNotice1').on('click', function () {
+        V.clearNotice(TD('.test')[0]);
+    });
+
+    TD('.clear1').on('click', function () {
+        V.clear(TD('.test')[0]);
+    });
+
+</script>
 </body>
 
 </html>

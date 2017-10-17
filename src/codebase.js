@@ -1,4 +1,4 @@
-(function() {
+(function () {
     var Tools,
         Calendar,
         I18n,
@@ -43,13 +43,15 @@
             }
         },
 
-        extend = function(child, parent) {
+        extend = function (child, parent) {
             for (var key in parent) {
                 if ({}.hasOwnProperty.call(parent, key))
                     child[key] = parent[key];
             }
 
-            function Ctor() {}
+            function Ctor() {
+            }
+
             Ctor.prototype = parent.prototype;
             child.prototype = new Ctor();
             child.prototype.constructor = child;
@@ -59,16 +61,16 @@
 
     I18n = {
         language: (navigator.language || navigator.browserLanguage),
-        trans: function(str) {
+        trans: function (str) {
             var ref;
             return ((ref = str[this.language]) == null ? str : ref);
         },
-        i18n: function(str, arr) {
+        i18n: function (str, arr) {
             str = this.trans(str);
             if (null != arr) {
                 var i = 0,
                     content = (arr.constructor == Array ? arr : [arr]);
-                str = str.replace(/%s/g, function() {
+                str = str.replace(/%s/g, function () {
                     return ' ' + content[i++] + ' ';
                 });
             }
@@ -77,43 +79,43 @@
     };
 
     Events = {
-        on: (function() {
+        on: (function () {
             if (document.body.addEventListener) {
-                return function(tag, event, func) {
+                return function (tag, event, func) {
                     tag.addEventListener(event, func, false);
                 };
             } else if (document.body.attachEvent) {
-                return function(tag, event, func) {
-                    var f = function (){
+                return function (tag, event, func) {
+                    var f = function () {
                         func.apply(tag);
                     };
                     tag.attachEvent('on' + event, f);
                 };
             } else {
-                return function(tag, event, func) {
+                return function (tag, event, func) {
                     tag['on' + event] = func;
                 };
             }
         })(),
-        off: (function() {
+        off: (function () {
             if (document.body.removeEventListener) {
-                return function(tag, event, func) {
+                return function (tag, event, func) {
                     tag.removeEventListener(event, func, false);
                 };
             } else if (document.body.detachEvent) {
-                return function(tag, event, func) {
+                return function (tag, event, func) {
                     tag.detachEvent('on' + event, func);
                 };
             } else {
-                return function(tag, event, func) {
+                return function (tag, event, func) {
                     tag['on' + event] = null;
                 };
             }
         })(),
-        getEvent: function(e) {
+        getEvent: function (e) {
             return e || window.event;
         },
-        stopBubble: function(e) {
+        stopBubble: function (e) {
             var event = this.getEvent(e);
             if (document.all) {
                 event.cancelBubble = true;
@@ -121,7 +123,7 @@
                 event.stopPropagation();
             }
         },
-        stopDefault: function(e) {
+        stopDefault: function (e) {
             var event = this.getEvent(e);
             if (document.all) {
                 event.returnValue = false;
@@ -129,14 +131,14 @@
                 event.preventDefault();
             }
         },
-        getTarget: function(e) {
+        getTarget: function (e) {
             var event = this.getEvent(e);
             return event.target || event.srcElement;
         }
     };
 
-    Module = (function() {
-        Module.include = function(obj) {
+    Module = (function () {
+        Module.include = function (obj) {
             var key,
                 ref,
                 value;
@@ -155,7 +157,7 @@
             return this;
         };
 
-        Module.extend = function(obj) {
+        Module.extend = function (obj) {
             var key,
                 ref,
                 value;
@@ -174,17 +176,17 @@
             return this;
         };
 
-        Module.proxy = function(func) {
-            return (function(_this) {
-                return function() {
+        Module.proxy = function (func) {
+            return (function (_this) {
+                return function () {
                     return func.apply(_this, arguments);
                 };
             })(this);
         };
 
-        Module.prototype.proxy = function(func) {
-            return (function(_this) {
-                return function() {
+        Module.prototype.proxy = function (func) {
+            return (function (_this) {
+                return function () {
                     return func.apply(_this, arguments);
                 };
             })(this);
@@ -200,7 +202,7 @@
 
     })();
 
-    Validator = (function(superClass) {
+    Validator = (function (superClass) {
         extend(Validator, superClass);
 
         Validator.include(I18n);
@@ -210,7 +212,7 @@
             Validator.__super__.constructor.apply(this, arguments);
         }
 
-        Validator.defineConfig = function(obj) {
+        Validator.defineConfig = function (obj) {
             if (typeof obj !== 'object') {
                 throw new Error(this.i18n('Validator.defineConfig的参数类型为object'));
             }
@@ -278,14 +280,14 @@
             }
         };
 
-        Validator.prototype.init = function() {
+        Validator.prototype.init = function () {
             var ref,
                 options = arguments[0] || {};
             this.showAllStatus = ((ref = options.showAllStatus) != null ? ref : true);
             this.language = ((ref = options.language) != null ? ref : this.language);
         };
 
-        Validator.prototype.initOptions = function() {
+        Validator.prototype.initOptions = function () {
             var options = arguments[0],
                 i,
                 ref,
@@ -362,7 +364,7 @@
 
         };
 
-        Validator.prototype.check = function() {
+        Validator.prototype.check = function () {
             this.initOptions.apply(this, arguments);
 
             var validator,
@@ -393,8 +395,8 @@
                             if (null == result) {
                                 reg = /%p(\d+)/g;
                                 result = temp.error != null ?
-                                    temp.error.replace(reg, (function(_this, temp) {
-                                        return function(a, b) {
+                                    temp.error.replace(reg, (function (_this, temp) {
+                                        return function (a, b) {
                                             return _this[(temp.params)[b]];
                                         };
                                     })(_this, temp)) : null;
@@ -409,7 +411,7 @@
             }
         };
 
-        Validator.prototype.setStatus = function() {
+        Validator.prototype.setStatus = function () {
             var target = this.statusTarget,
                 result = arguments[0],
                 parentTarget = target.parentNode,
@@ -439,51 +441,43 @@
             }
         };
 
-        Validator.prototype.isDom = function(obj) {
+        Validator.prototype.isDom = function (obj) {
             return (typeof HTMLElement === 'object') ? obj instanceof HTMLElement : obj && typeof obj === 'object' && obj.nodeType === 1 && typeof obj.nodeName === 'string';
         };
 
-        Validator.prototype.clearNotice = function(target) {
+        Validator.prototype.clearNotice = function (target) {
             var ref,
-                tag = target || document;
+                tag = target?target.parentNode:document;
             while ((ref = tag.querySelector('.validatorStatus')) != null) {
-                tag.removeChild(ref);
+                ref.parentNode.removeChild(ref);
             }
         };
 
-        Validator.prototype.clear = function() {
-            this.clearClass('inputError inputCorrect');
-            this.clearNotice();
+        Validator.prototype.clear = function (target) {
+            this.clearClass('input-error', target);
+            this.clearNotice(target);
         };
 
-        Validator.prototype.clearClass = function(classNames, target) {
-            var i,
-                len,
-                className,
-                ref,
-                j,
+        Validator.prototype.clearClass = function (classNames, target) {
+            var j,
                 len1,
-                temp,
-                reg,
-                tag;
-            classNames = classNames.split(/\s+/);
-            tag = target || document;
-            for (j = 0, len1 = classNames.length; j < len1; i++) {
-                temp = classNames[j];
-                ref = tag.querySelectorAll('.' + temp);
-                for (i = 0, len = ref.length; i < len; i++) {
-                    className = ref[i].className;
-                    reg = new RegExp(temp, 'gi');
-                    ref[i].className = className.replace(reg, ' ').replace(/\s+/gi, ' ');
+                temp;
+            if (target == null) {
+                classNames = classNames.split(/\s+/)
+                for (j = 0, len1 = classNames.length; j < len1; j++) {
+                    temp = classNames[j];
+                    D('.' + temp, target).removeClass(temp);
                 }
+            } else {
+                D(target).removeClass(classNames);
             }
         };
 
-        Validator.prototype.require = function() {
+        Validator.prototype.require = function () {
             return this.valueTarget.value != null && this.valueTarget.value.length > 0;
         };
 
-        Validator.prototype.size = function() {
+        Validator.prototype.size = function () {
             var ref = parseInt(this.valueTarget.value);
             return ref != null && ref >= parseInt(this.minSize) && ref <= parseInt(this.maxSize);
         };
@@ -492,7 +486,7 @@
 
     })(Module);
 
-    D = (function(superClass) {
+    D = (function (superClass) {
         extend(D, superClass);
 
         function D(selector, context) {
@@ -501,7 +495,7 @@
 
         D.fn = D.prototype = {
             constructor: D,
-            init: function(selector, context) {
+            init: function (selector, context) {
                 var elem,
                     con,
                     i,
@@ -554,8 +548,8 @@
 
             },
 
-            getFromContext: function(selector, context) {
-                elem = context.querySelectorAll(selector);
+            getFromContext: function (selector, context) {
+                var i, len, elem = context.querySelectorAll(selector);
                 for (i = 0, len = elem.length; i < len; i++) {
                     this[this.length] = elem[i];
                     this.length += 1;
@@ -563,7 +557,7 @@
                 return this;
             },
 
-            on: function(type, selector, fn) {
+            on: function (type, selector, fn) {
                 var i,
                     len,
                     dom;
@@ -582,7 +576,7 @@
                 return this;
             },
 
-            off: function(type, selector, fn) {
+            off: function (type, selector, fn) {
                 var i,
                     len,
                     dom;
@@ -601,7 +595,7 @@
                 return this;
             },
 
-            removeClass: function(value) {
+            removeClass: function (value) {
                 var className,
                     i,
                     len,
@@ -633,7 +627,7 @@
                 return this;
             },
 
-            addClass: function(value) {
+            addClass: function (value) {
                 var className,
                     strs,
                     i,
@@ -660,7 +654,7 @@
                 return this;
             },
 
-            attr: function(attr, value) {
+            attr: function (attr, value) {
                 var i,
                     len;
                 if (null == value || typeof value !== "string") {
@@ -672,7 +666,7 @@
                 }
             },
 
-            hasClass: function(value) {
+            hasClass: function (value) {
                 var className,
                     strs,
                     i,
@@ -704,7 +698,7 @@
                 return result;
             },
 
-            badge: function(value) {
+            badge: function (value) {
                 var i,
                     len;
                 if (null == value || 0 == value) {
@@ -718,7 +712,7 @@
                 return this;
             },
 
-            tip: function(value) {
+            tip: function (value) {
                 var i,
                     len,
                     elem,
@@ -747,8 +741,8 @@
                         child.innerHTML = value;
                         elem.appendChild(child);
 
-                        D(elem).on('mouseenter', (function(tip, oP) {
-                            return function() {
+                        D(elem).on('mouseenter', (function (tip, oP) {
+                            return function () {
                                 var p = tip.offsetParent || oP,
                                     x = 0,
                                     y = 0,
@@ -762,8 +756,8 @@
                                 tip.style.left = (x + w / 2 - left) + 'px';
                                 tip.style.top = (y - top) + 'px';
                             };
-                        })(child, document.body)).on('mouseleave', (function(tip) {
-                            return function() {
+                        })(child, document.body)).on('mouseleave', (function (tip) {
+                            return function () {
                                 tip.style.left = '-999px';
                             };
                         })(child));
@@ -777,7 +771,7 @@
         return D;
     })(Module);
 
-    Calendar = (function(superClass) {
+    Calendar = (function (superClass) {
 
         function Calendar() {
             Calendar.__super__.constructor.apply(this, arguments);
@@ -796,7 +790,7 @@
             }
         };
 
-        Calendar.prototype.dealOptions = function(options) {
+        Calendar.prototype.dealOptions = function (options) {
             var ref;
             // 全格式样例 yyyy/MM/dd HH:mm:ss
             this.dateFmt = (ref = options.dateFmt) != null ? ref : "yyyy/MM/dd";
@@ -819,7 +813,7 @@
             this.currentDate = this.parseDate(this.currentDate, this.dateFmt);
         };
 
-        Calendar.prototype.init = function() {
+        Calendar.prototype.init = function () {
             var obj = arguments[0],
                 options,
                 ref;
@@ -837,7 +831,7 @@
 
         };
 
-        Calendar.prototype.parseDate = function(d, format) {
+        Calendar.prototype.parseDate = function (d, format) {
             var dates,
                 fmt,
                 i,
@@ -899,7 +893,7 @@
             return new Date(year, mon, day, hour, min, sec);
         };
 
-        Calendar.prototype.setDateBefore = function(d, num, differFmt) {
+        Calendar.prototype.setDateBefore = function (d, num, differFmt) {
             if (d == null) {
                 d = new Date();
             }
@@ -926,12 +920,12 @@
             return d;
         };
 
-        Calendar.prototype.isLeap = function(d) {
+        Calendar.prototype.isLeap = function (d) {
             var year = d.getFullYear();
             return ((0 == year % 4 && 0 != year % 100) || "0" == year % 400);
         };
 
-        Calendar.prototype.dateFormat = function(format, d) {
+        Calendar.prototype.dateFormat = function (format, d) {
             if (d == null) {
                 d = new Date();
             } else {
@@ -958,7 +952,7 @@
             return format;
         };
 
-        Calendar.prototype.getWeekNumber = function(d) {
+        Calendar.prototype.getWeekNumber = function (d) {
             var day,
                 ms;
             if (d == null) {
@@ -973,12 +967,12 @@
             return Math.round((ms - d.valueOf()) / (7 * 864e5)) + 1;
         };
 
-        Calendar.prototype.changeDate = function(num, fmt) {
+        Calendar.prototype.changeDate = function (num, fmt) {
             this.currentDate = this.setDateBefore(this.currentDate, num, fmt);
             this.create();
         };
 
-        Calendar.prototype.setDayList = function() {
+        Calendar.prototype.setDayList = function () {
 
             var year = this.currentDate.getFullYear();
             var mon = this.currentDate.getMonth();
@@ -1002,7 +996,7 @@
             return dayList;
         };
 
-        Calendar.prototype.create = function() {
+        Calendar.prototype.create = function () {
             var dom = document.createElement('div'),
                 calendarHtml = this.createTop() + this.createDaylist();
             this.dom = null;
@@ -1018,11 +1012,11 @@
             return this;
         };
 
-        Calendar.prototype.createTop = function() {
+        Calendar.prototype.createTop = function () {
             return '<p class="calendarTop"><a class="prevYear">&lt;&lt;</a><a class="prevMon" >&lt;</a><label class="date">' + this.dateFormat("YYYY-MM", this.currentDate) + '</label><a class="nextMon">&gt;</a><a class="nextYear">&gt;&gt;</a></p>';
         };
 
-        Calendar.prototype.createDaylist = function() {
+        Calendar.prototype.createDaylist = function () {
             var i,
                 len,
                 temp,
@@ -1047,7 +1041,7 @@
                     }
                 }
                 calendarHtml += '" data-date="' + d[i].date + '">' + d[i].day + '</td>';
-                if (6 == i % 7) {
+                if (6 === i % 7) {
                     calendarHtml += "</tr>";
                 }
                 i++;
@@ -1056,18 +1050,18 @@
             return calendarHtml;
         };
 
-        Calendar.prototype.createTime = function() {
+        Calendar.prototype.createTime = function () {
             return '<p class="timeWrap"><a class="today">' + this.dateFormat('yyyy/MM/dd HH:mm:ss') + '</a></p>';
         };
 
-        Calendar.prototype.remove = function() {
+        Calendar.prototype.remove = function () {
             if (this.dom != null) {
                 this.position.removeChild(this.dom);
             }
             this.dom = null;
         };
 
-        Calendar.removeAll = function() {
+        Calendar.removeAll = function () {
             var current = document.querySelector('.calendarWrap'),
                 parent;
             while (null != current) {
@@ -1078,28 +1072,28 @@
             current = null;
         };
 
-        Calendar.prototype.turn = function() {
+        Calendar.prototype.turn = function () {
             var _this = this,
                 dom;
-            this.on(this.position.querySelector('.prevYear'), 'click', function() {
+            this.on(this.position.querySelector('.prevYear'), 'click', function () {
                 _this.changeDate(1, 5);
                 return false;
             });
-            this.on(this.position.querySelector('.prevMon'), 'click', function() {
+            this.on(this.position.querySelector('.prevMon'), 'click', function () {
                 _this.changeDate(1, 3);
                 return false;
             });
-            this.on(this.position.querySelector('.nextMon'), 'click', function() {
+            this.on(this.position.querySelector('.nextMon'), 'click', function () {
                 _this.changeDate(-1, 3);
                 return false;
             });
-            this.on(this.position.querySelector('.nextYear'), 'click', function() {
+            this.on(this.position.querySelector('.nextYear'), 'click', function () {
                 _this.changeDate(-1, 5);
                 return false;
             });
             dom = this.position.querySelector('.today');
             if (dom != null) {
-                this.on(dom, 'click', function() {
+                this.on(dom, 'click', function () {
                     _this.currentDate = new Date();
                     _this.create();
                     return false;
@@ -1110,14 +1104,14 @@
         return Calendar;
     })(Module);
 
-    TimePicker = (function(superClass) {
+    TimePicker = (function (superClass) {
         extend(TimePicker, superClass);
 
         function TimePicker() {
             TimePicker.__super__.constructor.apply(this, arguments);
         }
 
-        TimePicker.prototype.init = function() {
+        TimePicker.prototype.init = function () {
             var obj = arguments[0],
                 options,
                 ref;
@@ -1134,11 +1128,11 @@
             this.dealOptions(options);
         };
 
-        TimePicker.prototype.createTime = function() {
+        TimePicker.prototype.createTime = function () {
             return '<p class="timeWrap"><input class="timeInput" minSize="0" type="text" maxSize="23" validators="size" value="' + this.currentDate.getHours() + '"/><span>:</span><input class="timeInput" type="text" minSize="0" maxSize="59" validators="size" value="' + this.currentDate.getMinutes() + '"/><span>:</span><input class="timeInput" type="text" minSize="0" maxSize="59" validators="size" value="' + this.currentDate.getSeconds() + '"/><a class="timeSubmit">' + this.i18n(str.submit) + '</a></p>';
         };
 
-        TimePicker.prototype.create = function() {
+        TimePicker.prototype.create = function () {
             TimePicker.removeAll();
             TimePicker.__super__.create.call(this);
             this.dom.style.position = 'absolute';
@@ -1150,12 +1144,12 @@
             return this;
         };
 
-        TimePicker.prototype.selected = function() {
+        TimePicker.prototype.selected = function () {
             var _this = this,
                 dom,
                 dom1;
             if ((dom = this.position.querySelector('.dayList')) != null) {
-                this.on(dom, 'click', function(e) {
+                this.on(dom, 'click', function (e) {
                     e = e || window.event;
                     var target = e.target || e.srcElement,
                         flag = true,
@@ -1181,7 +1175,7 @@
             }
 
             if ((dom1 = this.position.querySelector('.timeSubmit')) != null) {
-                this.on(dom1, 'click', function() {
+                this.on(dom1, 'click', function () {
                     var times,
                         date,
                         flag = true;
@@ -1200,7 +1194,7 @@
             }
         };
 
-        TimePicker.prototype.checkTime = function() {
+        TimePicker.prototype.checkTime = function () {
             var dom,
                 doms,
                 i,
@@ -1216,17 +1210,17 @@
             return result;
         };
 
-        TimePicker.prototype.listenToHide = function() {
+        TimePicker.prototype.listenToHide = function () {
             var _this = this;
-            this.on(this.dom, 'click', function(e) {
+            this.on(this.dom, 'click', function (e) {
                 _this.stopBubble(e);
             });
 
-            this.on(this.valueTarget, 'click', function(e) {
+            this.on(this.valueTarget, 'click', function (e) {
                 _this.stopBubble(e);
             });
 
-            this.on(document, 'click', function(e) {
+            this.on(document, 'click', function (e) {
                 var target = _this.getTarget(e);
                 if (target != _this.valueTarget) {
                     _this.remove();
@@ -1237,7 +1231,7 @@
         return TimePicker;
     })(Calendar);
 
-    Canvas = (function(superClass) {
+    Canvas = (function (superClass) {
         extend(Canvas, superClass);
 
         function Canvas(id, w, r, g, b) {
@@ -1267,7 +1261,7 @@
             }
         }
 
-        Canvas.error = function() {
+        Canvas.error = function () {
             console.log('浏览器不支持canvas');
             return false;
         };
@@ -1286,7 +1280,7 @@
              * @param  {[type]} a         [rgba颜色中的a]
              * @return {[type]}           [暂无返回值]
              */
-            circle: function(w, deg, alphaFlag, angle, r, g, b, a) {
+            circle: function (w, deg, alphaFlag, angle, r, g, b, a) {
                 deg = deg || 360;
                 angle = angle || 0;
                 a = a || 1;
@@ -1319,7 +1313,7 @@
              * @param  {[type]} s         [step 单次画圆分成多少次绘制]
              * @return {[type]}           [description]
              */
-            gradualCircle: function(w, r, g, b, a, count, delay, s, deg, alphaFlag, angle) {
+            gradualCircle: function (w, r, g, b, a, count, delay, s, deg, alphaFlag, angle) {
                 delay = delay || 0;
                 s = s || 40;
                 angle = angle || -90;
@@ -1332,7 +1326,7 @@
                     i = 1;
                 clearTimeout(_this.loadingTimer);
                 clearInterval(_this.loadingTimer);
-                _this.loadingTimer = setInterval(function() {
+                _this.loadingTimer = setInterval(function () {
                     angle += d;
                     if (alphaFlag) {
                         alpha = i * a / s;
@@ -1344,7 +1338,7 @@
                         clearInterval(_this.loadingTimer);
                         if (undefined !== count && null != count && 0 !== count) {
                             count = 'infinite' == count ? count : count - 1;
-                            _this.loadingTimer = setTimeout(function() {
+                            _this.loadingTimer = setTimeout(function () {
                                 _this.ctx.clearRect(0, 0, _this.w, _this.h);
                                 _this.gradualCircle(w, r, g, b, a, count, delay);
                             }, delay);
@@ -1355,7 +1349,7 @@
             },
 
             //s:speed;
-            line: function(startX, startY, endX, endY, w, r, g, b, s) {
+            line: function (startX, startY, endX, endY, w, r, g, b, s) {
                 w = w || this.lineWidth;
                 this.ctx.lineWidth = w;
                 r = undefined != r ? r : this.r;
@@ -1371,7 +1365,7 @@
                     lenX = endX - startX,
                     incrementsX = lenX / s,
                     incrementsY = lenY / s,
-                    t = setInterval(function() {
+                    t = setInterval(function () {
                         _this.ctx.moveTo(tempX, tempY);
                         tempX += incrementsX;
                         tempY += incrementsY;
@@ -1384,23 +1378,23 @@
                 return this;
             },
 
-            alphaLoading: function(w, r, g, b, s) {
+            alphaLoading: function (w, r, g, b, s) {
                 var deg = 300,
                     angle = 0;
                 var _this = this;
                 s = s || 40;
-                _this.loadingTimer = setInterval(function() {
+                _this.loadingTimer = setInterval(function () {
                     angle += 360 / s;
                     _this.ctx.clearRect(0, 0, _this.w, _this.h);
                     _this.circle(w, deg, 1, angle, r, g, b);
                 }, 1000 / s);
                 return this;
             },
-            loading: function(w, r, g, b, s) {
+            loading: function (w, r, g, b, s) {
                 this.gradualCircle(w, r, g, b, 0, 'infinite', 500, s);
                 return this;
             },
-            success: function(w, r, g, b, s) {
+            success: function (w, r, g, b, s) {
                 this.ctx.clearRect(0, 0, this.w, this.h);
 
                 r = r || 0;
@@ -1416,7 +1410,7 @@
                 this.gradualCircle(w, r, g, b, 0, 0, 0, s).line(centerX, centerY, x, y, w, r, g, b, s).line(centerX, centerY, endX, endY, w, r, g, b, s);
                 return this;
             },
-            faild: function(w, r, g, b, s) {
+            faild: function (w, r, g, b, s) {
                 this.ctx.clearRect(0, 0, this.w, this.h);
                 r = r || 255;
                 g = g || 0;
@@ -1424,7 +1418,7 @@
                 this.gradualCircle(w, r, g, b, 0, 0, 0, s).line(this.w / 4, this.h / 4, this.w * 3 / 4, this.h * 3 / 4, w, r, g, b, s).line(this.w * 3 / 4, this.h / 4, this.w / 4, this.h * 3 / 4, w, r, g, b, s);
                 return this;
             },
-            error: function() {
+            error: function () {
                 console.log('浏览器不支持canvas');
                 return false;
             }
@@ -1434,7 +1428,7 @@
     })(Module);
 
     Feedback = {
-        msg: function(type, content, options) {
+        msg: function (type, content, options) {
             var msg,
                 duration = 3000,
                 showAnimation = 'anim-show-down',
@@ -1475,12 +1469,12 @@
                 if ('duration' in options && !isNaN(options.duration)) {
                     duration = options.duration;
                 }
-                setTimeout(function() {
+                setTimeout(function () {
                     if ('hideAnimation' in options) {
                         hideAnimation = options.hideAnimation;
                     }
                     D(msg).addClass(hideAnimation);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         msgs.removeChild(msg);
                     }, 300);
                 }, duration);
@@ -1489,13 +1483,17 @@
     };
 
     Tools = this.Tools = {
-        trim: function(str) {
+        trim: function (str) {
             return str.replace(/^\s+|\s+$/gi, '');
         },
-        alert: function(type, title, text, options) {},
-        confirm: function(title, text, callback) {},
-        notice: function(title, text, callback) {},
-        dialog: function() {}
+        alert: function (type, title, text, options) {
+        },
+        confirm: function (title, text, callback) {
+        },
+        notice: function (title, text, callback) {
+        },
+        dialog: function () {
+        }
     };
 
     Tools.Events = Events;
@@ -1505,7 +1503,7 @@
     Tools.D = D;
     Tools.Canvas = Canvas;
     Tools.Feedback = Feedback;
-})();
+})(this);
 
 var $ = $ || Tools.D;
 $('.switch').on('click', function() {
