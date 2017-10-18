@@ -1,12 +1,12 @@
 @charset "UTF-8";
-@import "../const.scss";
+@import "../_const";
 
 .calendarWrap {
     display: inline-block;
     padding: $blank-normal;
     background: map-get($color, 'bg');
     border: 1px solid map-get($color, 'border');
-    @include radius;
+    @extend %border-radius;
 
     &:hover {
         @include box-shadow(0 0 10px -2px #000);
@@ -16,7 +16,7 @@
         color: map-get($color, 'primary');
         display: inline-block;
         cursor: pointer;
-        @include radius(3px);
+        @include border-radius(3px);
 
         &:hover {
             text-decoration: none;
@@ -39,7 +39,7 @@
         .prevMon,
         .prevYear {
             width: 12%;
-            @include box-sizing;
+            @extend %box-sizing;
 
             &:hover {
                 background: map-get($color, 'primary');
@@ -67,7 +67,7 @@
         td {
             padding: 0.3em 0.8em;
             cursor: pointer;
-            @include radius;
+            @extend %border-radius;
             text-align: right;
             color: map-get($color-light, 'font');
 
@@ -122,13 +122,10 @@
     padding: 6px 15px;
     background: #ffffff;
     border: 1px solid #f04134;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    -webkit-box-shadow: 0 0 2px #000;
-    -moz-box-shadow: 0 0 2px #000;
-    box-shadow: 0 0 2px #000;
     z-index: 999;
+    @extend %border-radius;
+    @extend %box-shadow;
+    @extend %transition;
 
     &:after,
     &:before {
@@ -149,25 +146,24 @@
         z-index: 2;
     }
 }
+
 /*toolsBadge 徽标数或文字*/
 .toolsBadge {
-    position: relative;
-
-    &:before {
-        position: absolute;
-        display: inline-block;
-        font-size: $f-s-small;
-        background: map-get($color, 'danger');
-        color: #ffffff;
-        content: attr(data-toolsBadge);
-        padding: 0 0.5em;
-        height: 1.5em;
-        line-height: 1.5;
-        top: -.75em;
-        right: -.75em;
-        @include radius(.75em);
-    }
+    position: absolute;
+    display: inline-block;
+    text-align: center;
+    font-size: $f-s-small;
+    background: map-get($color, 'danger');
+    border: 2px solid map-get($color, 'bg');
+    color: #ffffff;
+    min-width: 14px;
+    height: 14px;
+    line-height: 14px;
+    top: -.75em;
+    right: -12px;
+    @include border-radius(14px);
 }
+
 /*toolsTip 小贴士 title替代品*/
 
 .toolsTip {
@@ -179,7 +175,7 @@
     white-space: normal;
     background: map-get($color-dark, 'font');
     color: #ffffff;
-    @include transition;
+    @extend %transition;
 
     &:before {
         display: inline-block;
@@ -192,5 +188,75 @@
         border: 10px solid transparent;
         border-top-color: map-get($color-dark, 'font');
         z-index: 2;
+    }
+}
+
+.load-wrap {
+    @extend %full-absolute;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+}
+
+.carousel {
+    position: relative;
+    display: block;
+    white-space: nowrap;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+
+    .carousel-imgs {
+        position: relative;
+        display: block;
+
+        li {
+            display: inline-block;
+            width: 100%;
+            height: 500px;
+
+            img {
+                width: 100%;
+                height: 500px;
+                @extend %box-sizing;
+            }
+        }
+    }
+
+    .tag-wrap {
+        position: absolute;
+        height: 50px;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+
+        .tag-list {
+            position: relative;
+            display: inline-block;
+            list-style: none;
+
+            .tag {
+                float: left;
+                height: 8px;
+                width: 10px;
+                margin: 0 5px;
+                background: #f2f2f2;
+                border: none;
+                cursor: pointer;
+                @include transition(.5s);
+                @extend %box-sizing;
+
+                &:hover {
+                    background: orange;
+                }
+
+                &.tag-current {
+                    background: orangered;
+                }
+            }
+        }
     }
 }

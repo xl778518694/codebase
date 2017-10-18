@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import "../const.scss";
+@import "../_const";
 
 blockquote,
 body,
@@ -27,6 +27,10 @@ th,
 ul {
     margin: 0;
     padding: 0;
+}
+
+p {
+    margin-bottom: $blank-normal;
 }
 
 body,
@@ -72,6 +76,7 @@ ul {
 
 a {
     text-decoration: none;
+    cursor: pointer;
 }
 
 a:hover {
@@ -84,10 +89,6 @@ sup {
 
 sub {
     vertical-align: text-bottom;
-}
-
-legend {
-    color: #000;
 }
 
 fieldset,
@@ -107,10 +108,18 @@ table {
     border-spacing: 0;
 }
 
+.clear-float {
+    &:after {
+        content: '.cf';
+        height: 0;
+        visibility: hidden;
+        clear: both;
+        display: block;
+    }
+}
+
 .ellipsis {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @extend %ph-ellipsis;
 }
 
 input {
@@ -134,23 +143,16 @@ input:-webkit-search-cancel-button {
     color: map-get($color, 'primary');
     outline: none;
     cursor: pointer;
-    @include transition;
+    @extend %transition;
 
     &:hover {
         text-decoration: underline;
     }
 }
+
 $c: map-get($color, 'primary');
 $cl: map-get($color-light, 'primary');
 $cd: map-get($color-dark, 'primary');
-
-
-%BtnDisabled {
-    border-color: map-get($color, 'border');
-    background-color: map-get($color, 'disabled');
-    color: map-get($color-dark, 'disabled');
-    cursor: not-allowed;
-}
 
 .btn {
     display: inline-block;
@@ -158,7 +160,6 @@ $cd: map-get($color-dark, 'primary');
     white-space: nowrap;
     font-size: $f-s-normal;
     text-align: center;
-    min-width: $btn-w-min;
     height: $h-normal;
     line-height: $h-normal - 2px;
     text-decoration: none;
@@ -167,9 +168,16 @@ $cd: map-get($color-dark, 'primary');
     color: map-get($color, 'font');
     background-color: map-get($color, 'bg');
     cursor: pointer;
-    @include radius;
-    @include box-sizing;
-    @include transition;
+    @extend %border-radius;
+    @extend %box-sizing;
+    @extend %transition;
+
+    &.btn-small {
+        padding: $blank-small / 2 $blank-small;
+        height: auto;
+        line-height: 100%;
+        @include border-radius(2px);
+    }
 
     &:hover {
         color: $c;
@@ -192,8 +200,7 @@ $cd: map-get($color-dark, 'primary');
 
             @if $t == 'warning' {
                 color: map-get($color, 'font');
-            }
-            @else {
+            } @else {
                 color: #ffffff;
             }
             background-color: $c;
@@ -217,10 +224,10 @@ $cd: map-get($color-dark, 'primary');
 
     &.btn-disabled {
         @extend %BtnDisabled;
-        &:hover{
+        &:hover {
             @extend %BtnDisabled;
         }
-        &:focus{
+        &:focus {
             @extend %BtnDisabled;
         }
     }
@@ -233,28 +240,45 @@ $cd: map-get($color-dark, 'primary');
 
     .btn {
         border-left-width: 0;
-        @include radius(0);
+        @include border-radius(0);
         margin-left: 1px;
 
         &:first-child {
             border-left-width: 1px;
-            @include radius(4px 0 0 4px);
+            @include border-radius(4px 0 0 4px);
         }
 
         &:last-child {
-            @include radius(0 4px 4px 0);
+            @include border-radius(0 4px 4px 0);
         }
     }
 }
+
 @font-face {
-    font-family: 'iconfont';
-    src: url('//at.alicdn.com/t/font_339362_adwf3e0vyt4kj4i.eot');
-    src: url('//at.alicdn.com/t/font_339362_adwf3e0vyt4kj4i.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_339362_adwf3e0vyt4kj4i.woff') format('woff'), url('//at.alicdn.com/t/font_339362_adwf3e0vyt4kj4i.ttf') format('truetype'), url('//at.alicdn.com/t/font_339362_adwf3e0vyt4kj4i.svg#iconfont') format('svg');
+    font-family: 'iconfont';  /* project id 339362 */
+    src: url('//at.alicdn.com/t/font_339362_p8qpgl4ixokfn7b9.eot');
+    src: url('//at.alicdn.com/t/font_339362_p8qpgl4ixokfn7b9.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_339362_p8qpgl4ixokfn7b9.woff') format('woff'),
+    url('//at.alicdn.com/t/font_339362_p8qpgl4ixokfn7b9.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_339362_p8qpgl4ixokfn7b9.svg#iconfont') format('svg');
 }
 
+*,
 *:after,
 *:before {
     font-family: "iconfont" !important;
+}
+
+.iconfont {
+    cursor: pointer;
+    text-decoration: none;
+    vertical-align: middle;
+    display: inline-block;
+    @extend %box-sizing;
+
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 .input {
@@ -265,9 +289,9 @@ $cd: map-get($color-dark, 'primary');
     border: 0 none;
     font-size: $f-s-normal;
     height: $h-normal;
-    @include radius;
-    @include transition;
-    @include box-sizing;
+    @extend %border-radius;
+    @extend %transition;
+    @extend %box-sizing;
 
     & > input {
         display: inline-block;
@@ -276,8 +300,8 @@ $cd: map-get($color-dark, 'primary');
         width: 100%;
         border: 1px solid map-get($color, 'border');
         outline: none;
-        @include radius;
-        @include box-sizing;
+        @extend %border-radius;
+        @extend %box-sizing;
 
         &:hover {
             border-color: $c;
@@ -329,13 +353,13 @@ input.input {
 
     &:after {
         position: absolute;
-        right: 0;
+        right: $blank-small;
         top: 0;
         text-align: center;
         font-size: $f-s-normal;
-        width: $blank-large;
         height: $h-normal - 2px;
         line-height: $h-normal - 2px;
+        color: map-get($color, 'font');
     }
     @each $t in map-keys($status) {
         &.input-#{$t}:after {
@@ -346,13 +370,9 @@ input.input {
 }
 
 fieldset {
+    margin-top: $blank-normal;
     border: 0 none;
     border-top: 1px solid map-get($color, 'line');
-    margin-top: $blank-large;
-
-    legend {
-        color: map-get($color, 'font');
-    }
 }
 
 .switch {
@@ -372,9 +392,9 @@ fieldset {
         border: 1px solid map-get($color, 'border');
         padding: 0 $h / 2 - 2px 0 $h + 2px;
         color: map-get($color, 'border');
-        @include radius($h / 2);
-        @include transition;
-        @include box-sizing;
+        @include border-radius($h / 2);
+        @extend %transition;
+        @extend %box-sizing;
     }
 
     &:after {
@@ -388,26 +408,26 @@ fieldset {
         right: auto;
         width: $h * 2 /3;
         height: $h * 2 /3;
-        @include radius($h * 2 /3);
-        @include transition;
-    }
-}
-
-.onswitch {
-    $h: $h-small;
-
-    &:before {
-        content: attr(data-on);
-        color: map-get($color, 'bg');
-        padding: 0 $h + 2px 0 $h / 2 - 2px;
-        border-color: map-get($color, 'success');
-        background-color: map-get($color, 'success');
+        @include border-radius($h * 2 /3);
+        @extend %transition;
     }
 
-    &:after {
-        left: auto;
-        right: $h / 6 + 1px;
-        background: map-get($color, 'bg');
+    &.onswitch {
+        $h: $h-small;
+
+        &:before {
+            content: attr(data-on);
+            color: map-get($color, 'bg');
+            padding: 0 $h + 2px 0 $h / 2 - 2px;
+            border-color: map-get($color, 'success');
+            background-color: map-get($color, 'success');
+        }
+
+        &:after {
+            left: auto;
+            right: $h / 6 + 1px;
+            background: map-get($color, 'bg');
+        }
     }
 }
 
@@ -415,6 +435,7 @@ fieldset {
     display: inline-block;
     cursor: pointer;
     position: relative;
+    z-index: 90;
 
     .input {
         & > input {
@@ -433,7 +454,7 @@ fieldset {
             border: 5px solid transparent;
             border-bottom: 0;
             border-top-color: map-get($color, 'font');
-            @include transition;
+            @extend %transition;
         }
     }
 
@@ -447,9 +468,10 @@ fieldset {
         padding: $blank-small 0;
         background-color: map-get($color, 'bg');
         border: 1px solid map-get($color, 'border');
-        @include radius;
-        @include box-sizing;
+        @extend %border-radius;
+        @extend %box-sizing;
         @include transition(top 1s);
+        z-index: 60;
 
         .option,
         dd {
@@ -460,8 +482,8 @@ fieldset {
             line-height: $h-normal;
             color: map-get($color, 'font');
             font-size: $f-s-small;
-            @include box-sizing;
-            @include transition;
+            @extend %box-sizing;
+            @extend %transition;
 
             &:hover {
                 background-color: map-get($color-dark, 'bg');
@@ -508,7 +530,7 @@ input[type='checkbox'] {
         }
     }
 
-    &.some.disabled{
+    &.some.disabled {
         &:before {
             background-color: map-get($color, 'bg');
         }
@@ -546,9 +568,9 @@ input[type='checkbox'] {
         top: 50%;
         margin-top: -($f-s-normal / 2 + 1px);
         border: 1px solid map-get($color, 'border');
-        @include radius;
-        @include transition;
-        @include box-sizing;
+        @extend %border-radius;
+        @extend %transition;
+        @extend %box-sizing;
     }
 
     &:hover:before {
@@ -582,6 +604,7 @@ input[type='checkbox'] {
     top: $blank-normal;
     left: 0;
     right: 0;
+    z-index: 999;
 
     .fd-msg {
         display: block;
@@ -599,8 +622,9 @@ input[type='checkbox'] {
             padding: $blank-small $blank-normal $blank-small $blank-normal + 20px;
             border: 1px solid map-get($color, 'border');
             white-space: nowrap;
+            color: map-get($color, 'font');
             pointer-events: all;
-            @include radius;
+            @extend %border-radius;
             @include box-shadow(0 0 3px map-get($color, 'border'));
 
             &:before {
@@ -621,37 +645,132 @@ input[type='checkbox'] {
         }
     }
 }
-@each $action in map-keys($animation) {
-    $option: map-get($animation, $action);
-    @each $behavior in map-keys($option) {
-        @if $behavior != 'anim' {
-            @keyframes #{$behavior}-#{$action} {
-                from {
-                    transform: #{map-get($option, 'anim')}'(#{nth(map-get($option, $behavior), 1)})';
 
-                    @if $behavior == 'show' {
-                        opacity: 0;
-                    }
-                    @else {
-                        opacity: 1;
-                    }
-                }
+.card {
+    display: inline-block;
+    border: 1px solid map-get($color-light, 'border');
+    background: map-get($color-light, 'bg');
+    margin-right: $blank-normal;
+    margin-bottom: $blank-normal;
+    @extend %border-radius;
+    @extend %transition;
 
-                to {
-                    transform: #{map-get($option, 'anim')}'( #{nth(map-get($option, $behavior), 2)})';
+    &:hover {
+        border-color: map-get($color-dark, 'border');
+        @extend %box-shadow;
+    }
+}
 
-                    @if $behavior == 'show' {
-                        opacity: 1;
-                    }
-                    @else {
-                        opacity: 0;
-                    }
-                }
+.tab-list {
+    display: inline-block;
+    text-align: right;
+    width: 100%;
+    border-bottom: 1px dashed map-get($color, 'line');
+    margin-bottom: $blank-small;
+
+    .tab {
+        position: relative;
+        float: left;
+        cursor: pointer;
+        color: map-get($color-light, 'primary');
+        padding: $blank-small $blank-normal;
+        @extend %transition;
+
+        &:after {
+            position: absolute;
+            bottom: -2px;
+            content: ' ';
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            background: transparent;
+            @include transform(scale(0));
+            @include transition(transform .3s);
+        }
+
+        &:hover{
+            color: map-get($color, 'primary');
+            &:after{
+                background: currentColor;
+                @include transform(scale(1));
+            }
+        }
+
+        &.current{
+            color: map-get($color, 'danger');
+            &:after{
+                background: currentColor;
+                @include transform(scale(1));
+            }
+        }
+
+        .switch, button {
+            margin-right: $blank-small;
+        }
+    }
+    &.tab-btn{
+        padding: $blank-small;
+
+        .tab {
+            float: left;
+            cursor: pointer;
+            position: relative;
+            padding: $blank-small $blank-normal;
+            color: map-get($color, 'bg');
+
+            &:after {
+                @extend %full-absolute;
+                height: auto;
+                @include transform(skewX(-25deg));
+                background: map-get($color-light, 'font');
+                z-index: -1;
+                @extend %transition;
             }
 
-            .anim-#{$behavior}-#{$action} {
-                animation: #{$behavior}-#{$action} 0.3s ease-in-out;
+            &.current, &:hover {
+                &:after {
+                    background: map-get($color-light, 'b');
+                }
             }
+        }
+    }
+}
+
+.drop-down-list {
+    @extend .select;
+
+    span {
+        position: relative;
+        display: inline-block;
+        padding: 0 $blank-large 0 $blank-normal;
+        @extend %box-sizing;
+
+        &:after {
+            position: absolute;
+            display: inline-block;
+            right: 8px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 14px;
+            color: map-get($color, 'font');
+            content: "\e602";
+        }
+    }
+
+    .options,
+    dl {
+        top: 0;
+        width: auto;
+        line-height: 1.2;
+        @extend %box-shadow;
+    }
+
+    &:hover {
+        .options,
+        dl {
+            display: inline-block;
+            @extend .anim-show-scaleY;
         }
     }
 }

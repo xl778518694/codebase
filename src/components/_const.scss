@@ -1,10 +1,32 @@
-$color: ( border: #bfbfbf, line: #e9e9e9, bg: #ffffff, disabled: #fbfbfb, font: #5a5a5a, primary: #108ee9, danger: #f04134, error: #f04134, success: #00a854, correct: #00a854, warning: #ffbf00, info: #108ee9, );
+$color: (
+        border: #bfbfbf,
+        line: #e9e9e9,
+        bg: #ffffff,
+        disabled: #fbfbfb,
+        font: #5a5a5a,
+        primary: #108ee9,
+        danger: #f04134,
+        error: #f04134,
+        success: #00a854,
+        correct: #00a854,
+        warning: #ffbf00,
+        info: #108ee9,
+        e: #ff7473,
+        w: #ffc952,
+        s: #56A902,
+        i: #47b8e0,
+        b: #34314c
+);
 $color-light: ();
 $color-dark: ();
 @each $k in map-keys($color) {
     $color-light: map-merge($color-light, (#{$k}: lighten(map-get($color, $k), 10%)));
     $color-dark: map-merge($color-dark, (#{$k}: darken(map-get($color, $k), 10%)));
+    .#{$k} {
+        color: map-get($color, $k);
+    }
 }
+
 $f-s-small: 12px;
 $f-s-normal: 14px;
 $f-s-large: 16px;
@@ -18,21 +40,308 @@ $h-small: 22px;
 $w-normal: 200px;
 $w-min: 100px;
 $w-max: 400px;
-$status: ( info: '\e73e', warning: '\e734', error: '\e626', incorrect: '\e626', success: '\e627', correct: '\e627' );
-$animation: ( up:( anim: 'translateY', show: (30px 0), hide: (0 -30px) ), down:( anim: 'translateY', show: (-30px 0), hide: (0 30px) ), press:( anim: 'scale', show: (3 1), hide: (1 0) ), pressY:( anim: 'scaleY', show: (3 1), hide: (1 0) ), pressX:( anim: 'scaleX', show: (3 1), hide: (1 0) ), scale:( anim: 'scale', show: (0 1), hide: (1 3) ), scaleY:( anim: 'scaleY', show: (0 1), hide: (1 3) ), scaleX:( anim: 'scaleX', show: (0 1), hide: (1 3) ) );
-@mixin radius($radius:4px) {
-    border-radius: $radius;
+$status: (
+        info: '\e73e',
+        warning: '\e734',
+        error: '\e626',
+        incorrect: '\e626',
+        success: '\e627',
+        correct: '\e627',
+        search: '\e6ac'
+);
+
+$map-prefix: (
+        webkit: true,
+        moz: true,
+        ms: true,
+        o: true
+);
+
+@mixin prefix($property, $value, $prefixes:webkit moz o ms) {
+    @each $p in $prefixes {
+        @if map-get($map-prefix, $p) == true {
+            -#{$p}-#{$property}: $value;
+        }
+    }
+    #{$property}: $value;
 }
-@mixin box-sizing($t:border-box) {
-    -webkit-box-sizing: $t;
-    box-sizing: $t;
+
+@mixin calc($value, $p){
+    #{$p}:-moz-calc(#{$value});
+    #{$p}:-webkit-calc(#{$value});
+    #{$p}: calc(#{$value});
 }
-@mixin box-shadow($arguments) {
-    -webkit-box-shadow: $arguments;
-    -moz-box-shadow: $arguments;
-    box-shadow: $arguments;
+
+@mixin border-radius($value:4px) {
+    @include prefix(border-radius, $value, webkit moz);
 }
-@mixin transition($transition:all .3s) {
-    -webkit-transition: $transition;
-    transition: $transition;
+
+@mixin box-shadow($value) {
+    @include prefix(box-shadow, $value, webkit moz);
+}
+
+@mixin transition($value:all .3s) {
+    @include prefix(transition, $value, webkit);
+}
+
+@mixin transform($value) {
+    @include prefix(transform, $value, webkit);
+}
+
+@mixin animation($value) {
+    @include prefix(animation, $value, webkit);
+}
+
+@mixin border-color-x($color) {
+    border-top-color: $color;
+    border-bottom-color: $color;
+}
+
+@mixin border-color-y($color) {
+    border-left-color: $color;
+    border-right-color: $color;
+}
+
+%box-sizing {
+    @include prefix(box-sizing, border-box, webkit moz);
+}
+
+%transition {
+    @include prefix(transition, all .3s linear, webkit);
+}
+
+%border-radius {
+    @include prefix(border-radius, 4px, webkit moz);
+}
+
+%box-shadow{
+    @include prefix(box-shadow, 0 5px 20px -5px #000, webkit moz);
+}
+
+%ph-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+%full-absolute {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+}
+
+%BtnDisabled {
+    border-color: map-get($color, 'border');
+    background-color: map-get($color, 'disabled');
+    color: map-get($color-dark, 'disabled');
+    cursor: not-allowed;
+}
+
+
+$animation: (
+        up:(anim: 'translateY', show: (300px 0), hide: (0 -30px)),
+        down:(anim: 'translateY', show: (-300px 0), hide: (0 30px)),
+        left:(anim: 'translateX', show: (300px 0), hide: (0 -30px)),
+        right:(anim: 'translateX', show: (-300px 0), hide: (0 30px)),
+        press:(anim: 'scale', show: (3 1), hide: (1 0)),
+        pressY:(anim: 'scaleY', show: (3 1), hide: (1 0)),
+        pressX:(anim: 'scaleX', show: (3 1), hide: (1 0)),
+        scale:(anim: 'scale', show: (0 1), hide: (1 3)),
+        scaleY:(anim: 'scaleY', show: (0 1), hide: (1 3)),
+        scaleX:(anim: 'scaleX', show: (0 1), hide: (1 3)),
+        rotate:(anim: 'rotate', a:(182deg 268deg -370deg 350deg), b:(-340deg 380deg 230deg -190deg)),
+        skewY:(anim: 'skewY', a:(0deg 20deg -10deg 10deg), b:(-20deg 10deg 30deg -10deg)),
+        skewX:(anim: 'skewX', a:(0deg 20deg -10deg 10deg), b:(-20deg 10deg 30deg -10deg))
+);
+
+@each $action in map-keys($animation) {
+    $option: map-get($animation, $action);
+    @each $behavior in map-keys($option) {
+        @if $behavior != 'anim' {
+            @keyframes #{$behavior}-#{$action} {
+                $l: map-get($option, $behavior);
+                $len: length($l);
+                @for $i from 0 to $len {
+                    $percentage: $i / ($len - 1) * 100;
+                    #{$percentage}% {
+                        transform: #{map-get($option, 'anim')}'(#{nth($l, $i+1)})';
+                        @if $behavior == 'show' {
+                            opacity: $i / ($len - 1);
+                        } @else if $behavior == 'hide' {
+                            opacity: ($len - 1 - $i) / ($len - 1);
+                        }
+                    }
+                }
+            }
+
+            .anim-#{$behavior}-#{$action} {
+                animation: #{$behavior}-#{$action} 0.3s ease-in-out;
+            }
+
+            @for $i from 1 through 5 {
+                .anim-#{$behavior}-#{$action}-#{$i} {
+                    animation: #{$behavior}-#{$action} #{$i}s ease-in-out;
+                }
+                .anim-#{$behavior}-#{$action}-d#{$i} {
+                    animation: #{$behavior}-#{$action} #{1 / $i}s ease-in-out;
+                }
+            }
+
+        }
+    }
+}
+
+@each $i in X, Y {
+    .skew#{$i} {
+        &:before, &:after {
+            display: block;
+            border: 3px solid transparent;
+            @extend %transition;
+            @extend %full-absolute;
+            z-index: -1;
+        }
+
+        &:hover, &.selected {
+            border-color: transparent;
+
+            &:after {
+                @if $i == X {
+                    @include border-color-x(map-get($color-light, 'e'));
+                }
+                @if $i == Y {
+                    @include border-color-y(map-get($color-light, 'e'));
+                }
+                @include animation(a-skew#{$i} 2s ease-in-out alternate infinite);
+            }
+
+            &:before {
+                left: 5px;
+                right: 5px;
+                top: 5px;
+                bottom: 5px;
+
+                @if $i == X {
+                    @include border-color-x(map-get($color-light, 'i'));
+                }
+                @if $i == Y {
+                    @include border-color-y(map-get($color-light, 'i'));
+                }
+
+                @include animation(b-skew#{$i} 2s ease-in-out alternate infinite);
+            }
+        }
+    }
+}
+
+.rotate {
+    &:before, &:after {
+        display: block;
+        position: absolute;
+        content: '';
+        left: 50%;
+        right: 50%;
+        top: 50%;
+        bottom: 50%;
+        background: transparent;
+        border: 2px solid transparent;
+        @include border-radius(50%);
+        @extend %transition;
+    }
+
+    &:hover, &.selected {
+        border-color: transparent;
+
+        &:after {
+            @include border-color-y(map-get($color, 'danger'));
+            top: -6px;
+            bottom: -6px;
+            left: -6px;
+            right: -6px;
+            @include animation(a-rotate 5s ease-in-out alternate infinite);
+        }
+
+        &:before {
+            @include border-color-y(map-get($color, 'correct'));
+            top: -10px;
+            bottom: -10px;
+            left: -10px;
+            right: -10px;
+            @include animation(b-rotate 5s ease-in-out alternate infinite);
+
+        }
+    }
+}
+
+.bracket {
+    &:before, &:after {
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        color: transparent;
+        @extend %transition;
+    }
+
+    &:before {
+        left: 50%;
+        content: '[';
+    }
+
+    &:after {
+        right: 50%;
+        content: ']';
+    }
+
+    &:hover, &.selected {
+        &:before {
+            left: -$blank-small;
+            color: map-get($color, 'info');
+        }
+
+        &:after {
+            right: -$blank-small;
+            color: map-get($color, 'info');
+        }
+    }
+}
+
+.rotate-200 {
+    &:before, &:after {
+        display: block;
+        position: absolute;
+        content: '';
+        width: 0;
+        height: 0;
+        top: 50%;
+        left: 50%;
+        border: 3px solid transparent;
+        @include border-radius(50%);
+        @extend %transition;
+        z-index: -1;
+    }
+
+    &:hover, &.selected {
+        border-color: transparent;
+
+        &:after {
+            @include border-color-y(map-get($color, 'danger'));
+            width: 190px;
+            height: 190px;
+            margin-left: -95px;
+            margin-top: -95px;
+            @include animation(a-rotate 5s ease-in-out alternate infinite);
+        }
+
+        &:before {
+            @include border-color-y(map-get($color, 'correct'));
+            width: 200px;
+            height: 200px;
+            margin-left: -100px;
+            margin-top: -100px;
+            @include animation(b-rotate 5s ease-in-out alternate infinite);
+
+        }
+    }
 }

@@ -6,7 +6,7 @@
     <title>test less</title>
     <link rel="stylesheet" href="codebase.min.css">
     <style media="screen">
-        body{
+        body {
             margin: 20px auto;
             width: 90%;
         }
@@ -14,127 +14,145 @@
 </head>
 
 <body>
-    <fieldset>
-        <legend>按钮类型</legend>
-    </fieldset>
-    <input type="button" class="btn" name="" value="默认" />
-    <input type="button" class="btn btn-primary" name="" value="主要操作" />
-    <input type="button" class="btn btn-danger" name="" value="危险操作" />
-    <input type="button" class="btn btn-warning" name="" value="警告操作" />
-    <input type="button" class="btn btn-correct" name="" value="正确操作" />
-    <input type="button" class="btn btn-disabled" name="" value="禁用操作" />
-    <a href="#" class="btn">链接默认按钮样式</a>
+<fieldset>
+    <legend>按钮类型</legend>
+</fieldset>
+<input type="button" class="btn" name="" value="默认"/>
+<input type="button" class="btn btn-primary" name="" value="主要操作"/>
+<input type="button" class="btn btn-danger" name="" value="危险操作"/>
+<input type="button" class="btn btn-warning" name="" value="警告操作"/>
+<input type="button" class="btn btn-correct" name="" value="正确操作"/>
+<input type="button" class="btn btn-disabled" name="" value="禁用操作"/>
+<a href="#" class="btn">链接默认按钮样式</a>
 
-    <fieldset>
-        <legend>按钮组</legend>
-    </fieldset>
-    <div class="btn-group">
-        <input type="button" class="btn btn-primary" name="" value="操作1" />
-        <input type="button" class="btn btn-primary" name="" value="操作2" />
-        <input type="button" class="btn btn-primary" name="" value="操作3" />
-    </div>
+<fieldset>
+    <legend>按钮组</legend>
+</fieldset>
+<div class="btn-group">
+    <input type="button" class="btn btn-primary" name="" value="操作1"/>
+    <input type="button" class="btn btn-primary" name="" value="操作2"/>
+    <input type="button" class="btn btn-primary" name="" value="操作3"/>
+</div>
 
-    <fieldset>
-        <legend>链接类型</legend>
-    </fieldset>
-    <input type="button" class="link" name="" value="按钮链接样式" />
+<fieldset>
+    <legend>链接类型</legend>
+</fieldset>
+<input type="button" class="link" name="" value="按钮链接样式"/>
 
-    <fieldset>
-        <legend>输入框</legend>
-    </fieldset>
-    <div class="input">
-        <input type="text" name="" value="" placeholder="初始样式">
-    </div>
+<fieldset>
+    <legend>输入框</legend>
+</fieldset>
+<div class="input">
+    <input type="text" name="" value="" placeholder="初始样式">
+</div>
 
-    <div class="input input-error">
-        <input type="text" name="" value="" placeholder="错误样式">
-    </div>
+<div class="input input-error">
+    <input type="text" name="" value="" placeholder="错误样式">
+</div>
 
-    <input type="text" class="input" value="" placeholder="初始样式">
-    <input type="text" class="input input-error" name="" value="" placeholder="错误样式">
+<input type="text" class="input" value="" placeholder="初始样式">
+<input type="text" class="input input-error" name="" value="" placeholder="错误样式">
 
-    <fieldset>
-        <legend>输入框 包含反馈</legend>
-    </fieldset>
-    <div class="input">
-        <input type="text" name="" value="" placeholder="初始样式">
-    </div>
-    <div class="feedback input input-correct">
-        <input type="text" name="" value="" placeholder="正确样式">
-    </div>
-    <div class="feedback input input-error">
-        <input type="text" name="" value="" placeholder="错误样式">
-    </div>
+<fieldset>
+    <legend>输入框 包含反馈</legend>
+</fieldset>
+<div class="input">
+    <input type="text" name="" value="" placeholder="初始样式">
+</div>
+<div class="feedback input input-correct">
+    <input type="text" name="" value="" placeholder="正确样式">
+</div>
+<div class="feedback input input-error">
+    <input type="text" name="" value="" placeholder="错误样式">
+</div>
 
-    <fieldset>
-        <legend>开关</legend>
-    </fieldset>
-    <span class="switch" data-on="On" data-off='Off'></span>
-    <span class="switch onswitch" data-on="开" data-off='关'></span>
+<fieldset>
+    <legend>开关</legend>
+</fieldset>
+<span class="switch" data-on="On" data-off='Off'></span>
+<span class="switch onswitch" data-on="开" data-off='关'></span>
 
-    <fieldset>
-        <legend>可点击的多选框</legend>
-    </fieldset>
-    <label for="checkbox1" class="checkbox">未选中</label>
-    <input type="checkbox" disabled name="" id="checkbox1" value="123">
-    <label for="checkbox2" class="checkbox checked">
-        选中
-        <input type="checkbox" disabled name="" id="checkbox2" value="123">
-    </label>
+<fieldset>
+    <legend>可点击的多选框</legend>
+</fieldset>
+<label for="checkbox1" class="checkbox">未选中</label>
+<input type="checkbox" disabled name="" id="checkbox1" value="123">
+<label for="checkbox2" class="checkbox checked">
+    选中
+    <input type="checkbox" disabled name="" id="checkbox2" value="123">
+</label>
 
 
-    <label for="" class="checkboxs">全不选状态</label>
-    <label for="" class="checkboxs some">部分选择状态</label>
-    <label for="" class="checkboxs all">全选状态</label>
+<label for="" class="checkboxs">全不选状态</label>
+<label for="" class="checkboxs some">部分选择状态</label>
+<label for="" class="checkboxs all">全选状态</label>
 
-    <fieldset>
-        <legend>不可点的多选框</legend>
+<fieldset>
+    <legend>不可点的多选框</legend>
 
-    </fieldset>
-    <label for="checkbox3" class="checkbox disabled">
-        <span>未选中</span>
-        <input type="checkbox" disabled name="" id="checkbox3" value="123">
-    </label>
-    <label for="checkbox4" class="checkbox checked disabled">已选中</label>
-    <input type="checkbox" disabled name="" id="checkbox4" value="123">
+</fieldset>
+<label for="checkbox3" class="checkbox disabled">
+    <span>未选中</span>
+    <input type="checkbox" disabled name="" id="checkbox3" value="123">
+</label>
+<label for="checkbox4" class="checkbox checked disabled">已选中</label>
+<input type="checkbox" disabled name="" id="checkbox4" value="123">
 
-    <label class="checkboxs disabled">全不选状态</label>
-    <label class="checkboxs disabled some">部分选择状态</label>
-    <label class="checkboxs disabled all">全选状态</label>
+<label class="checkboxs disabled">全不选状态</label>
+<label class="checkboxs disabled some">部分选择状态</label>
+<label class="checkboxs disabled all">全选状态</label>
 
-    <fieldset>
-        <legend>下拉选择</legend>
-        <div class="select">
-            <div class="input">
-                <input type="text" readonly name="" value="" placeholder="dl元素 和 option class一起使用">
-            </div>
-            <dl class="options">
-                <dd class="option" data-value='test1'>test1</dd>
-                <dd class="option" data-value='test2'>test2</dd>
-            </dl>
+<fieldset>
+    <legend>下拉选择</legend>
+    <div class="select">
+        <div class="input">
+            <input type="text" readonly name="" value="" placeholder="dl元素 和 option class一起使用">
         </div>
+        <dl class="options">
+            <dd class="option" data-value='test1'>test1</dd>
+            <dd class="option" data-value='test2'>test2</dd>
+        </dl>
+    </div>
 
-        <div class="select">
-            <div class="input">
-                <input type="text" readonly name="" value="" placeholder="只用option class">
-            </div>
-            <p class="options">
-                <a class="option" data-value='test1'>test1</a>
-                <a class="option" data-value='test2'>test2</a>
-            </p>
+    <div class="select">
+        <div class="input">
+            <input type="text" readonly name="" value="" placeholder="只用option class">
         </div>
+        <p class="options">
+            <a class="option" data-value='test1'>test1</a>
+            <a class="option" data-value='test2'>test2</a>
+        </p>
+    </div>
 
-        <div class="select">
-            <div class="input">
-                <input type="text" readonly name="" value="" placeholder="只用dl元素">
-            </div>
-            <dl>
-                <dd data-value='test1'>test1</dd>
-                <dd data-value='test2'>test2</dd>
-            </dl>
+    <div class="select">
+        <div class="input">
+            <input type="text" readonly name="" value="" placeholder="只用dl元素">
         </div>
-    </fieldset>
-    <script src="codebase.min.js" charset="utf-8"></script>
+        <dl>
+            <dd data-value='test1'>test1</dd>
+            <dd data-value='test2'>test2</dd>
+        </dl>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>标签</legend>
+    <div>
+        <ul class="tab-list">
+            <li class="tab current">test1</li>
+            <li class="tab">test2</li>
+            <li class="tab">test3</li>
+        </ul>
+    </div>
+    <div>
+        <ul class="tab-list tab-btn">
+            <li class="tab current">test1</li>
+            <li class="tab">test2</li>
+            <li class="tab">test3</li>
+        </ul>
+    </div>
+</fieldset>
+<script src="codebase.min.js" charset="utf-8"></script>
 </body>
 
 </html>
